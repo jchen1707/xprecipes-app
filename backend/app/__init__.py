@@ -1,14 +1,26 @@
-from flask import Flask
+from flask import Flask, render_template, request
+from flask_mysqldb import MySQL
 from flask_restful import Api, Resource, reqparse
-from ai_quotes import ai_quotes 
-import quoteHandler
 
 
 app = Flask(__name__)
 api = Api(app)
 
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'flask'
 
-class Quote(Resource):
+mysql = MySQL(app)
+
+@app.route('/form')
+def form():
+    return render_template('form.html')
+ 
+@app.route('/login', methods = ['POST', 'GET', 'PUT', 'DELETE'])
+
+
+class Recipe(Resource):
     
     def get(self, id=0):
         if id == 0:
@@ -70,7 +82,7 @@ class Quote(Resource):
         response.headers.add('Access-Control-Allow-Origin','*')
         return response
 
-api.add_resource(Quote, "/ai-quotes", "/ai-quotes/", "/ai-quotes/<int:id>")
+api.add_resource(Recipe, "/xprecipes", "/xprecipes/", "/xprecipes/<int:id>")
 
 if __name__ == '__main__':
     app.run(debug=True)
