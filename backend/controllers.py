@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from flask_mysqldb import MySQL
+import pymysql, pymysql.cursors 
 from flask_restful import Api, Resource, reqparse
 
 
@@ -17,7 +17,7 @@ mysql = MySQL(app)
 def form():
     return render_template('form.html')
  
-@app.route('/login', methods = ['POST', 'GET', 'PUT', 'DELETE'])
+@app.route('/login', methods = ['POST', 'GET', 'PUT', 'DELETE'] )
 
 
 class Recipe(Resource):
