@@ -1,8 +1,8 @@
-#Xprecipes
+# Xprecipes
 An app made to organize and manage your pantry, fridge, and freezer inventory.
 Streamline your inventory management and cooking process with this express recipe app by instantly finding dishes that you can make with what you have on hand.
 
-##Built with
+## Built with
 [React](https://reactjs.org/)
 [TailwindCSS](https://tailwindcss.com/)
 [DaisyUI](https://daisyui.com/)
