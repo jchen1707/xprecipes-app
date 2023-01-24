@@ -1,7 +1,8 @@
-from flask import request,jsonify
+from flask import request
 from flask_restful import Resource
 from backend.models import Recipe 
-from S3_helpers import get_image_url 
+from backend.S3_helpers import get_image_url,upload_to_s3 
+from backend.controllers import app
 
 class RecipeCreate(Resource):
     def post(self):
@@ -9,13 +10,13 @@ class RecipeCreate(Resource):
         ingredients = request.json['ingredients']
         ingredient_quantity = request.json['ingredient_quantity']
         unit = request.json['unit']
-        image_key = request.json['image_key']
+        image = request.files['image']
+        image_url = upload_to_s3(app, image, "xprecipes-images")
+        image_key = image_url.split("/")[-1]
         calories = request.json['calories']
         cooktime = request.json['cooktime']
         recipe = Recipe(title=title,ingredients=ingredients,ingredient_quantity=ingredient_quantity
                         ,unit=unit,image_key=image_key,calories=calories,cooktime=cooktime)
-        recipe.save()
-        recipe.image_url = get_image_url(recipe.image_key,"xprecipes-images")
         recipe.save()
         return recipe.to_dict(), 201
 
@@ -36,8 +37,8 @@ class RecipeUpdate(Resource):
         recipe.image_key = image_key
         recipe.calories = calories
         recipe.cooktime = cooktime 
-        recipe.save()
         recipe.image_url = get_image_url(recipe,image_key,'xprecipes_images')
+        recipe.save()
         return recipe.to_dict(), 200
 
 class RecipeDelete(Resource):

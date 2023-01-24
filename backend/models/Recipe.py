@@ -1,5 +1,5 @@
 from backend.controllers import db
-from S3_helpers import get_image_url
+from backend.S3_helpers import get_image_url
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -10,7 +10,7 @@ class Recipe(db.Model):
     image_key = db.Column(db.String(255), nullable=True)
     calories = db.Column(db.Integer, nullable=False)
     cooktime = db.Column(db.Interval, nullable=False)
-    images = db.relationship('Image', backref='recipe',lazy=True)
+
 
     def __init__(self, title, ingredients, instructions, ingredient_quantity, unit,
              calories, cooktime, image_key = None):

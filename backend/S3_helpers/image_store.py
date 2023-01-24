@@ -17,23 +17,22 @@ logging.basicConfig(level=logging.INFO,
                     handlers=[CloudWatchLogHandler(log_group_name, log_stream_name, boto3.client('logs'))])
 
 
-def upload_to_s3(app,file,bucket_name, acl="public-read"):
-    try:
-
-        s3.upload_fileobj(
-            file, 
-            bucket_name, 
-            file.filename, 
-            ExtraArgs={
-                "ACL": acl,
-                "ContentType": file.content_type
-            }
-        )
-    
-    except FileNotFoundError as e:
-        logging.exception("Error: File not Found %s", e)
-    except ValueError as e:
-        logging.exception("Invalid value: %s", e)
-
-    
-    return "{}{}".format(app.config["S3_LOCATION"], file.filename)
+def upload_to_s3(app, file, bucket_name, acl="public-read"):
+    if file:
+        try:
+            s3.upload_fileobj(
+                file, 
+                bucket_name, 
+                file.filename, 
+                ExtraArgs={
+                    "ACL": acl,
+                    "ContentType": file.content_type
+                }
+            )
+        except FileNotFoundError as e:
+            logging.exception("Error: File not Found %s", e)
+        except ValueError as e:
+            logging.exception("Invalid Key value: %s", e)
+        return "{}{}".format(app.config["S3_LOCATION"], file.filename)
+    else:
+        return app.config["S3_LOCATION"]+"default-image-filename"
