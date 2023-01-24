@@ -1,10 +1,11 @@
-from backend import db
+from backend.controllers import db
 
-class Token(db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    token = db.Column(db.String(255), unique=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    tokens = db.relationship('Token', backref='user', lazy=True)
     
-    def __init__(self, token, user_id):
-        self.token = token
-        self.user_id = user_id
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password

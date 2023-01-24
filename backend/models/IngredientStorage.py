@@ -1,6 +1,6 @@
-from backend import db
+from backend.controllers import db
 
-class VirtualFridge(db.Model):
+class IngredientStorage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     ingredient = db.Column(db.String(255), nullable=False)
     amount = db.Column(db.String(255), nullable=False)
