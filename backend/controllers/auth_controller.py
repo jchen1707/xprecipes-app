@@ -4,6 +4,24 @@ from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_requir
 from flask_wtf.csrf import validate_csrf
 from cerberus import Validator
 from  backend.models import User,Token
+from .__init__ import db
+
+
+class Register(Resource):
+    def post(self):
+        data = request.get_json()
+        username = data.get('username')
+        password = data.get('password')
+        
+        # Hash the password with a salt
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+        
+        # Create a new user
+        new_user = User(username=username, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        return ({'message': 'New user created!'}), 201
 
 class Login(Resource):
 
