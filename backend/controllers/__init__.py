@@ -1,12 +1,15 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import CSRFProtect
 from backend.routes.recipe_routes import recipe_bp
 from backend.routes.auth_routes import auth_bp
 from backend.routes.ingredient_routes import ingredient_bp
 from backend.config import SQL_ALCHEMY_DATABASE_URI, SECRET_KEY
+from app import create_app
 
-app = Flask(__name__)
+app = create_app()
+csrf = CSRFProtect(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = SQL_ALCHEMY_DATABASE_URI
 app.config['SECRET_KEY'] = SECRET_KEY
 db = SQLAlchemy(app)
