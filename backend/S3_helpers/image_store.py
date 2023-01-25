@@ -1,5 +1,6 @@
 import boto3 
 import logging
+import uuid
 from cloudwatch_logging import CloudWatchLogHandler
 
 cloudwatch_logs = boto3.client('logs')
@@ -20,6 +21,7 @@ logging.basicConfig(level=logging.INFO,
 def upload_to_s3(app, file, bucket_name, acl="public-read"):
     if file:
         try:
+            key = str(uuid.uuid64()) + file.filename
             s3.upload_fileobj(
                 file, 
                 bucket_name, 
