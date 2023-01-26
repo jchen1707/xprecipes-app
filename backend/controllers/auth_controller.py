@@ -3,31 +3,38 @@ from flask_restful import Resource, reqparse
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from flask_wtf.csrf import validate_csrf
 from cerberus import Validator
-from  backend.models import User,Token
-from .__init__ import db
+from backend.models import User,Token
+from backend import db
+from flask_bcrypt import Bcrypt
+from backend import db
 
+bcrypt = Bcrypt()
 
 class Register(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument("username", type=str, required=True, help="Username is required")
+    parser.add_argument("password", type=str, required=True, help="Password is required")
+
     def post(self):
         data = request.get_json()
-        username = data.get('username')
-        password = data.get('password')
-        
-        # Hash the password with a salt
+        v = Validator(validation_schema)
+        if not v.validate(data):
+            return v.errors, 400
+        if User.query.filter_by(username=data["username"]).first():
+            return {"messsage": "Username already exists"}, 401
+        username = data.get("username")
+        password = data.get("password")
         salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
-        
-        # Create a new user
+        hashed_password = bcrypt.hashpw(password.encode("utf-8"), salt)
         new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
-        return ({'message': 'New user created!'}), 201
+        return ({"message": "New user created!"}), 201
 
 class Login(Resource):
-
     parser = reqparse.RequestParser()
-    parser.add_argument('username', type=str, required=True, help='Username is required')
-    parser.add_argument('password', type=str, required=True, help='Password is required')
+    parser.add_argument("username", type=str, required=True, help="Username is required")
+    parser.add_argument("password", type=str, required=True, help="Password is required")
 
     def post(self):
         if not validate_csrf(request.form.get("csrf_token")):
@@ -36,24 +43,24 @@ class Login(Resource):
         v = Validator(validation_schema)
         if not v.validate(data):
             return v.errors, 400
-        user = User.query.filter_by(username=data['username']).first()
-        if user and user.check_password(data['password']):
+        user = User.query.filter_by(username=data["username"]).first()
+        if user and bcrypt.checkpw(data["password"].encode("utf-8"), user.password):
             access_token = create_access_token(identity=user.id)
             token = Token(user_id=user.id, token=access_token)
             token.save()
-            return{'access_token': access_token}, 200
-        return {'message': 'Invalid username or password'}, 401
+            return{"access_token": access_token}, 200
+        return {"message": "Invalid username or password"}, 401
 
 class Logout(Resource):
     @jwt_required
     def post(self):
         current_user = get_jwt_identity()
         if current_user is None:
-            return {'message': 'Unauthorized access'}, 401
+            return {"message": "Unauthorized access"}, 401
         token = Token.query.filter_by(user_id=current_user).first()
         token.revoked = True
         token.save()
-        return {'message': 'Successfully logged out'}, 200
+        return {"message": "Successfully logged out"}, 200
 
 validation_schema = {
     "username": {

@@ -1,23 +1,19 @@
 from flask import Blueprint
-from backend.controllers.auth_controller import Login, Logout
-from backend.app import csrf
-from backend.controllers.auth_controller import AuthController
+from backend.controllers.auth_controller import Login, Logout, Register
 
-auth_bp = Blueprint('auth_bp', __name__)
+auth_bp = Blueprint("auth_bp", __name__)
+Register_instance = Register()
+Login_instance = Login()
+Logout_instance = Logout() 
 
-
-@auth_bp.route('/register', methods=['POST'])
-@csrf.exempt
+@auth_bp.route("/register", methods=["POST"])
 def register():
-    return AuthController.register()
+    return Register_instance .post()
 
-
-@auth_bp.route('/login', methods=['POST'])
-@csrf.exempt
+@auth_bp.route("/login", methods=["POST"])
 def login():
-    return Login.post()
+    return Login_instance.post()
 
-@auth_bp.route('/logout', methods=['POST'])
-@csrf.exempt
+@auth_bp.route("/logout", methods=["POST"])
 def logout():
-    return Logout.post()
+    return Logout_instance.post()
