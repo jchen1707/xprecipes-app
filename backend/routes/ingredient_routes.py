@@ -1,27 +1,27 @@
-from flask import Blueprint
-from backend.app import csrf
-from backend.controllers.ingredient_controller import IngredientCreate, IngredientUpdate, \
-     IngredientDelete, IngredientList
+from flask import Blueprint, jsonify
+from backend.controllers.ingredient_controller import IngredientController
 
 ingredient_bp = Blueprint("ingredient_bp", __name__)
 
-IngredientCreate_instance = IngredientCreate()
-IngredientUpdate_instance = IngredientUpdate()
-IngredientDelete_instance = IngredientDelete()
-IngredientGet_instance = IngredientList()
+controller = IngredientController()
 
 @ingredient_bp.route("/ingredient", methods=["POST"])
 def create_ingredient():
-    return IngredientCreate_instance.post()
+    response = controller.create_ingredient()
+    return jsonify(response), response["status_code"]
 
 @ingredient_bp.route("/ingredient/<ingredient_id>", methods=["PUT"])
 def update_ingredient(ingredient_id):
-    return IngredientUpdate_instance.put(ingredient_id)
+    response = controller.update_ingredient(ingredient_id)
+    return jsonify(response), response["status_code"]
 
 @ingredient_bp.route("/ingredient/<ingredient_id>", methods=["DELETE"])
 def delete_ingredient(ingredient_id):
-    return IngredientDelete_instance.delete(ingredient_id)
+    response = controller.delete_ingredient(ingredient_id)
+    return jsonify(response), response["status_code"]
 
 @ingredient_bp.route("/ingredients", methods=["GET"])
 def list_ingredients():
-    return IngredientGet_instance.get()
+    response = controller.list_ingredients()
+    return jsonify(response), response["status_code"]
+

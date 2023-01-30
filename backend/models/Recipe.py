@@ -1,11 +1,11 @@
-from backend.controllers import db
+from backend import db
 from backend.S3_helpers import get_image_url
 
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     ingredients = db.Column(db.String(255), nullable=False)
-    ingredient_quantity = db.Column(db.String(255), nullable=False)
+    ingredient_quantity = db.Column(db.Float(), nullable=False)
     unit = db.Column(db.String(255), nullable=False)
     image_key = db.Column(db.String(255), nullable=True)
     calories = db.Column(db.Integer, nullable=False)
@@ -25,15 +25,15 @@ class Recipe(db.Model):
 
     def to_dict(self):
         recipe_data = {
-            'id': self.id,
-            'title': self.title,
-            'ingredients': self.ingredients,
-            'quantity': self.ingredient_quantity,
-            'unit': self.unit,
-            'image_key': self.image_key,
-            'calories': self.calories,
-            'cooktime': self.cooktime,
+            "id": self.id,
+            "title": self.title,
+            "ingredients": self.ingredients,
+            "quantity": self.ingredient_quantity,
+            "unit": self.unit,
+            "image_key": self.image_key,
+            "calories": self.calories,
+            "cooktime": self.cooktime,
         }
         if self.image_key:
-            recipe_data['image_url'] = get_image_url(self.image_key, "xprecipes-images")
+            recipe_data["image_url"] = get_image_url(self.image_key, "xprecipes-images")
         return recipe_data

@@ -55,7 +55,6 @@ class RecipeCreate(Resource):
         ingredient_quantity = request.json["ingredient_quantity"]
         unit = bleach.clean(request.json["unit"])
 
-        # validate image
         if "image" in request.files:
             image = request.files["image"]
             if not image.filename.endswith((".jpg", ".jpeg", ".png")):
