@@ -1,7 +1,6 @@
 from flask import request
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
-from flask_wtf.csrf import validate_csrf
 from cerberus import Validator
 from backend.models import User, Token
 from backend import db

@@ -1,19 +1,25 @@
-from flask import Blueprint
-from backend.controllers.auth_controller import Login, Logout, Register
-
+from flask import Blueprint, jsonify, request
+from backend.controllers import auth_controller
+from backend import csrf_validation_middleware
 auth_bp = Blueprint("auth_bp", __name__)
-Register_instance = Register()
-Login_instance = Login()
-Logout_instance = Logout() 
 
-@auth_bp.route("/register", methods=["POST"])
+controller = auth_controller()
+
+@auth_bp.before_request
+def csrf_validation():
+    csrf_validation_middleware()
+
+@auth_bp.route("/auth/register", methods=["POST"])
 def register():
-    return Register_instance .post()
+    response = controller.register(request.get_json())
+    return jsonify(response), response["status_code"]
 
-@auth_bp.route("/login", methods=["POST"])
+@auth_bp.route("/auth/login", methods=["POST"])
 def login():
-    return Login_instance.post()
+    response = controller.login(request.get_json())
+    return jsonify(response), response["status_code"]
 
-@auth_bp.route("/logout", methods=["POST"])
+@auth_bp.route("/auth/logout", methods=["POST"])
 def logout():
-    return Logout_instance.post()
+    response = controller.logout()
+    return jsonify(response), response["status_code"]

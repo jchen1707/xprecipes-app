@@ -1,7 +1,7 @@
 import pytest
 import json
 from flask import Flask
-from backend.recipe_routes import recipe_bp
+from backend.routes import recipe_bp
 
 @pytest.fixture
 def app():

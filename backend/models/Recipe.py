@@ -10,6 +10,7 @@ class Recipe(db.Model):
     image_key = db.Column(db.String(255), nullable=True)
     calories = db.Column(db.Integer, nullable=False)
     cooktime = db.Column(db.Interval, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 
     def __init__(self, title, ingredients, instructions, ingredient_quantity, unit,

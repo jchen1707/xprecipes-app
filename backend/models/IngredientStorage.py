@@ -5,6 +5,7 @@ class IngredientStorage(db.Model):
     ingredient = db.Column(db.String(255), nullable=False)
     amount = db.Column(db.Float(), nullable=False)
     unit = db.Column(db.String(255), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     
     def __init__(self, ingredient, amount, unit):
         self.ingredient = ingredient

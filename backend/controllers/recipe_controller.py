@@ -1,8 +1,7 @@
 import bleach
 from flask import request
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
-from flask_wtf.csrf import validate_csrf
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from cerberus import Validator
 from PIL import Image
 from backend.models import Recipe 
@@ -17,7 +16,7 @@ validation_schema = {
         "maxlength": 100
     },
     "ingredients": {
-        "type": "String",
+        "type": "string",
         "required": True,
         "minlength": 1,
         "maxlength": 100
@@ -38,14 +37,17 @@ validation_schema = {
     "cooktime": {
         "type": "integer",
         "required": True
+    },
+    "image": {
+    "type": "file",
+    "required": False,
+    "allowed": ["jpg", "jpeg", "png"]
     }
 }
 
 class RecipeCreate(Resource):
     @jwt_required
-    def post(self):
-        if not validate_csrf(request.form.get("csrf_token")):
-            return {"message": "Invalid CSRF token"}, 400        
+    def post(self):   
         data = request.json
         v = Validator(validation_schema)
         if not v.validate(data):
@@ -54,7 +56,6 @@ class RecipeCreate(Resource):
         ingredients = bleach.clean(request.json["ingredients"])
         ingredient_quantity = request.json["ingredient_quantity"]
         unit = bleach.clean(request.json["unit"])
-
         if "image" in request.files:
             image = request.files["image"]
             if not image.filename.endswith((".jpg", ".jpeg", ".png")):
@@ -70,7 +71,6 @@ class RecipeCreate(Resource):
             image_key = image_url.split("/")[-1]
         else:
             image_key = "default_image_key"
-
         calories = request.json["calories"]
         cooktime = request.json["cooktime"]
         recipe = Recipe(title=title, ingredients=ingredients, ingredient_quantity=ingredient_quantity
@@ -81,9 +81,7 @@ class RecipeCreate(Resource):
 
 class RecipeUpdate(Resource):
     @jwt_required
-    def put(self, recipe_id):
-        if not validate_csrf(request.form.get("csrf_token")):
-            return {"message": "Invalid CSRF token"}, 400        
+    def put(self, recipe_id):    
         data = request.json
         v = Validator(validation_schema)
         if not v.validate(data):
@@ -133,12 +131,13 @@ class RecipeDelete(Resource):
 
 class RecipeList(Resource):
     @jwt_required
-    def get(self,recipe_id):
-        recipes = Recipe.query.filter_by(id=recipe_id).first()
+    def get(self, recipe_id):
+        current_user = get_jwt_identity()
+        recipe = Recipe.query.filter_by(id=recipe_id, user_id=current_user).first()
         if recipe is None:
             return {"message": "Recipe not found"}, 404
-        for recipe in recipes:
-            recipe_data = recipe.to_dict()
-            recipe_data["image_url"] = get_image_url(recipe, recipe.image_key, "xprecipes_images")
-        return recipes
+        recipe_data = recipe.to_dict()
+        recipe_data["image_url"] = get_image_url(recipe, recipe.image_key, "xprecipes_images")
+        return recipe_data
+
 

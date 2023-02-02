@@ -1,9 +1,14 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify,request
 from backend.controllers.ingredient_controller import IngredientController
+from backend import csrf_validation_middleware
 
 ingredient_bp = Blueprint("ingredient_bp", __name__)
 
 controller = IngredientController()
+
+@ingredient_bp.before_request
+def csrf_validation():
+    csrf_validation_middleware()
 
 @ingredient_bp.route("/ingredient", methods=["POST"])
 def create_ingredient():
@@ -22,6 +27,7 @@ def delete_ingredient(ingredient_id):
 
 @ingredient_bp.route("/ingredients", methods=["GET"])
 def list_ingredients():
-    response = controller.list_ingredients()
+    user_id = request.headers.get("user_id")
+    response = controller.list_ingredients(user_id)
     return jsonify(response), response["status_code"]
 

@@ -1,4 +1,4 @@
-from flask import Blueprint,jsonify
+from flask import Blueprint,jsonify,request
 from backend.controllers import recipe_controller
 from backend import csrf_validation_middleware
 
@@ -27,5 +27,7 @@ def delete_recipe(recipe_id):
 
 @recipe_bp.route("/recipes", methods=["GET"])
 def list_recipes():
-    response = controller.list_recipes()
+    user_id = request.headers.get("user_id")
+    response = controller.list_recipes(user_id)
     return jsonify(response), response["status_code"]
+

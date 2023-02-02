@@ -1,4 +1,3 @@
-import boto3
 import logging
 
 class CloudWatchLogHandler(logging.Handler):

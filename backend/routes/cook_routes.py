@@ -1,19 +1,11 @@
-from flask import Blueprint, request
-from backend.app import db
-from backend.models import IngredientStorage
+from flask import Blueprint, jsonify
+from backend.controllers import cook_controller
 
 cook_bp = Blueprint("cook_bp", __name__)
 
-@cook_bp.route("/cook", methods=["POST"])
-def cook_recipe():
-    ingredient_name = request.json['ingredient_name']
-    amount = request.json['amount']
+controller = cook_controller()
 
-    ingredient = IngredientStorage.query.filter_by(name=ingredient_name).first()
-    if ingredient is None:
-        return "Ingredient does not exist", 400
-    if ingredient.amount < amount:
-        return "Not enough ingredient in storage", 400
-    ingredient.amount -= amount
-    db.session.commit()
-    return "Success", 200
+@cook_bp.route("/cook/<recipe_id>", methods=["POST"])
+def cook_recipe(recipe_id):
+    response = controller.cook_recipe(recipe_id)
+    return jsonify(response), response["status_code"]

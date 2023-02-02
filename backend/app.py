@@ -16,8 +16,11 @@ def create_app():
 
     @app.teardown_appcontext
     def close_db(error):
-        db.session.remove()
-
+        try:
+            db.session.remove()
+        except Exception as e:
+             app.logger.error("Error while closing database: %s", str(e))
+             
     app.register_blueprint(recipe_bp)
     app.register_blueprint(ingredient_bp)
     app.register_blueprint(auth_bp)

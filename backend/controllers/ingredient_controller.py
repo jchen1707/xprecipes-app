@@ -1,8 +1,7 @@
 import bleach
 from flask import request
 from flask_restful import Resource
-from flask_wtf.csrf import validate_csrf
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from cerberus import Validator
 from backend import db
 from backend.models import IngredientStorage
@@ -25,9 +24,7 @@ validation_schema = {
 
 class IngredientCreate(Resource):
     @jwt_required
-    def post(self):
-        if not validate_csrf(request.form.get("csrf_token")):
-            return {"message": "Invalid CSRF token"}, 400        
+    def post(self): 
         data = request.json
         v = Validator(validation_schema)
         if not v.validate(data):
@@ -46,8 +43,6 @@ class IngredientCreate(Resource):
 class IngredientUpdate(Resource):
     @jwt_required
     def put(self, ingredient_id):
-        if not validate_csrf(request.headers.get("X-CSRF-Token")):
-            return {"message": "Invalid CSRF token"}, 400
         data = request.get_json()
         v = Validator(validation_schema)
         if not v.validate(data):
@@ -67,8 +62,6 @@ class IngredientUpdate(Resource):
 class IngredientDelete(Resource):
     @jwt_required
     def delete(self, ingredient_id):
-        if not validate_csrf(request.headers.get("X-CSRF-Token")):
-            return {"message": "Invalid CSRF token"}, 400
         ingredient_storage = IngredientStorage.query.get(ingredient_id)
         if ingredient_storage is None:
             return {"message": "Ingredient not found"}, 404
@@ -79,11 +72,10 @@ class IngredientDelete(Resource):
 
 class IngredientList(Resource):
     @jwt_required
-    def get(self):
-        if not validate_csrf(request.form.get("csrf_token")):
-            return {"message": "Invalid CSRF token"}, 400
-        ingredients = IngredientStorage.query.all()
+    def get(self, ingredient_id):
+        user_id = get_jwt_identity()
+        ingredients = IngredientStorage.query.filter_by(id=ingredient_id, user_id=user_id).first()
         if ingredients is None:
-            return {"message": "No ingredients found"}, 404
-        return [ingredient.to_dict() for ingredient in ingredients], 200
+            return {"message": "Ingredient not found"}, 404
+        return ingredients.to_dict()
 

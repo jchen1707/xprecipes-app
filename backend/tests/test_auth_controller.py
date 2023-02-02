@@ -1,9 +1,16 @@
 import json
 import pytest
+from flask import Flask
 from flask_jwt_extended import create_access_token
 from backend.models import User, Token
+from backend.routes import auth_bp
 from backend.controllers import auth_controller
 
+@pytest.fixture
+def app():
+    app = Flask(__name__)
+    app.register_blueprint(auth_bp)
+    return app
 
 def test_register_user(client, init_db):
     response = client.post(
@@ -120,7 +127,7 @@ def test_token_refresh_valid(client, init_db):
     data = json.loads(response.data.decode())
     assert response.status_code == 200
     assert "access_token" in data.keys()
-    
+
 def test_token_refresh_invalid(client, init_db):
     response = client.post("/refresh", headers={"Authorization": "Bearer invalidtoken"})
     data = json.loads(response.data.decode())
