@@ -1,8 +1,17 @@
 import json
 import pytest
+from flask import Flask
 from flask_jwt_extended import create_access_token
 from backend.models import User, Token
 from backend.controllers import auth_controller
+from backend.routes import auth_bp
+
+
+@pytest.fixture
+def app():
+    app = Flask(__name__)
+    app.register_blueprint(auth_bp)
+    return app
 
 
 def test_register(client, app):
