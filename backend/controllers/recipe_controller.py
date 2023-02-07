@@ -1,4 +1,5 @@
 import bleach
+import uuid
 from flask import request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
@@ -67,8 +68,9 @@ class RecipeCreate(Resource):
                 img.verify()
             except Exception as e:
                 return {"message": "Image is corrupt"}, 400
-            image_url = upload_to_s3(app, image, "xprecipes-images")
-            image_key = image_url.split("/")[-1]
+            filename = str(uuid.uuid4()) + image.filename.split(".")[-1]
+            upload_to_s3(app, image, "xprecipes-images", filename)
+            image_key = filename
         else:
             image_key = "default_image_key"
         calories = request.json["calories"]
@@ -110,11 +112,13 @@ class RecipeUpdate(Resource):
                 img.verify()
             except Exception as e:
                 return {"message": "Image is corrupt"}, 400
-            image_url = upload_to_s3(app, image, "xprecipes-images")
-            image_key = image_url.split("/")[-1]
+            filename = str(uuid.uuid4()) + image.filename.split(".")[-1]
+            upload_to_s3(app, image, "xprecipes-images", filename)
+            image_key = filename
             recipe.image_key = image_key
         db.session.commit()
         return recipe.to_dict(), 200
+
 
 class RecipeDelete(Resource):
     @jwt_required
