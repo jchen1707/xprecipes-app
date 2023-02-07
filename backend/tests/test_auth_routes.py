@@ -13,7 +13,6 @@ def app():
     app.register_blueprint(auth_bp)
     return app
 
-
 def test_register(client, app):
     response = client.post("/auth/register",
                            data=json.dumps({

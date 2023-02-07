@@ -2,9 +2,9 @@ import json
 import pytest
 from flask import Flask
 from backend.config import SQL_ALCHEMY_DATABASE_URI, SECRET_KEY
-from backend.models import Recipe
 from backend.routes import auth_bp
 from app import create_app
+from backend import db
 
 @pytest.fixture
 def app():
@@ -17,8 +17,15 @@ def client():
     app.config["TESTING"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = SQL_ALCHEMY_DATABASE_URI
     app.config["SECRET_KEY"] = SECRET_KEY
-    client = app.test_client()
     yield client
+    with app.app_context():
+        db.create_all()
+
+    yield client
+
+    with app.app_context():
+        db.session.remove()
+        db.drop_all()
 
 def test_create_recipe_with_required_fields(client):
     data = {

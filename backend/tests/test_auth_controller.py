@@ -1,16 +1,32 @@
 import json
 import pytest
 from flask import Flask
-from flask_jwt_extended import create_access_token
-from backend.models import User, Token
 from backend.routes import auth_bp
-from backend.controllers import auth_controller
+from backend import db
+from app import create_app
+from backend.config import SQL_ALCHEMY_DATABASE_URI, SECRET_KEY
 
 @pytest.fixture
 def app():
     app = Flask(__name__)
     app.register_blueprint(auth_bp)
     return app
+
+def client():
+    app = create_app()
+    app.config["TESTING"] = True
+    app.config["SQLALCHEMY_DATABASE_URI"] = SQL_ALCHEMY_DATABASE_URI
+    app.config["SECRET_KEY"] = SECRET_KEY
+    client = app.test_client()
+    yield client
+    with app.app_context():
+        db.create_all()
+
+    yield client
+
+    with app.app_context():
+        db.session.remove()
+        db.drop_all()
 
 def test_register_user(client, init_db):
     response = client.post(

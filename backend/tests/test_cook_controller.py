@@ -14,17 +14,24 @@ def app():
     app.register_blueprint(cook_bp)
     return app
 
-def client():
-    app = create_app()
+@pytest.fixture
+def client(app):
     app.config["TESTING"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = SQL_ALCHEMY_DATABASE_URI
     app.config["SECRET_KEY"] = SECRET_KEY
     client = app.test_client()
+
+    with app.app_context():
+        db.create_all()
+
     yield client
 
+    with app.app_context():
+        db.session.remove()
+        db.drop_all()
 
 def test_cook_recipe_with_valid_id(client):
-    data = {
+    recipe_data = {
         "title": "test recipe",
         "ingredients": "test ingredients",
         "ingredient_quantity": 1,
@@ -32,18 +39,17 @@ def test_cook_recipe_with_valid_id(client):
         "calories": 100,
         "cooktime": 20
     }
-    response = client.post("/recipe", data=json.dumps(data), content_type="application/json")
+    response = client.post("/recipe", data=json.dumps(recipe_data), content_type="application/json")
     assert response.status_code == 201
     recipe = json.loads(response.data)
     recipe_id = recipe["id"]
 
-    ingredient = recipe["ingredients"]
-    ingredient_quantity = recipe["ingredient_quantity"]
-    data = {
-        "ingredient": ingredient,
-        "amount": ingredient_quantity + 1
+    ingredient_data = {
+        "ingredient": recipe["ingredients"],
+        "amount": recipe["ingredient_quantity"] + 1,
+        "unit": recipe["unit"]
     }
-    response = client.post("/storage", data=json.dumps(data), content_type="application/json")
+    response = client.post("/storage", data=json.dumps(ingredient_data), content_type="application/json")
     assert response.status_code == 201
 
     response = client.post(f"/cook/{recipe_id}")
@@ -51,8 +57,9 @@ def test_cook_recipe_with_valid_id(client):
     response_data = json.loads(response.data)
     assert response_data["message"] == "Recipe cooked successfully."
 
-    storage = IngredientStorage.query.filter_by(ingredient=ingredient).first()
+    storage = IngredientStorage.query.filter_by(ingredient=ingredient_data["ingredient"]).first()
     assert storage.amount == 1
+
 
 def test_cook_recipe_with_invalid_id(client):
     response = client.post("/cook/1000")
@@ -69,23 +76,12 @@ def test_cook_recipe_with_insufficient_ingredients(client):
         "calories": 100,
         "cooktime": 20
     }
-    response = client.post("/recipe", data=json.dumps(recipe_data), content_type="application/json")
-    recipe_id = json.loads(response.data)['id']
 
-    ingredient_data = {
-        "ingredient": "test ingredients",
-        "amount": 2,
-        "unit": "g"
-    }
-    client.post("/ingredient", data=json.dumps(ingredient_data), content_type="application/json")
+    # Add the recipe
+    response = client.post("/recipe/", json=recipe_data)
+    assert response.status_code == 201
 
-    response = client.post(f"/cook/{recipe_id}")
+    # Try to cook the recipe with insufficient ingredients
+    response = client.post("/cook/", json={"recipe_id": 1, "ingredient_quantity": 4})
     assert response.status_code == 400
-    error = json.loads(response.data)
-    assert error["error"] == "Ingredient not available or insufficient amount."
-
-def test_cook_recipe_with_non_existent_recipe(client):
-    response = client.post("/cook/1")
-    assert response.status_code == 404
-    error = json.loads(response.data)
-    assert error["error"] == "Recipe not found."
+    assert response.json() == {"message": "Insufficient ingredients to cook the recipe"}
