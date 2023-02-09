@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .header-content {
+    display: flex;
+    align-items: center;
+
+    .header-title {
+      font-weight: bold;
+      margin-right: 1rem;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+
+    .btn {
+      border: none;
+      border-radius: 0.25rem;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      font-weight: bold;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      &-login {
+        background-color: #f0ad4e;
+        color: #fff;
+
+        &:hover {
+          background-color: #ed9b0f;
+        }
+      }
+
+      &-register {
+        background-color: #5cb85c;
+        color: #fff;
+
+        &:hover {
+          background-color: #47a447;
+        }
+      }
+    }
+  }
+}
