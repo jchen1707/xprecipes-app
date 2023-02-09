@@ -1,25 +1,35 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
-const initialState = {
+interface Ingredient {
+  id: string;
+  ingredient: string;
+  amount: number;
+  unit: string;
+}
+
+interface IngredientsState {
+  ingredients: Ingredient[];
+}
+
+const initialState: IngredientsState = {
   ingredients: [],
 };
 
-export const ingredientReducer = (state = initialState, action: any) => {
-  switch (action.type) {
-    case 'ADD_INGREDIENT':
-      return {
-        ...state,
-        ingredients: [
-          ...state.ingredients,
-          {
-            id: uuidv4(),
-            ingredient: action.ingredient,
-            amount: 0,
-            unit: ''
-          },
-        ],
-      };
-    default:
-      return state;
-  }
-};
+const ingredientSlice = createSlice({
+  name: 'ingredients',
+  initialState,
+  reducers: {
+    addIngredient: (state, action: PayloadAction<string>) => {
+      state.ingredients.push({
+        id: uuidv4(),
+        ingredient: action.payload,
+        amount: 0,
+        unit: '',
+      });
+    },
+  },
+});
+
+export const ingredientReducer = ingredientSlice.reducer;
+export const { addIngredient } = ingredientSlice.actions;

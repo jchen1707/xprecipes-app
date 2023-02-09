@@ -6,12 +6,6 @@ import { IngredientStorage } from '../../models/IngredientStorage';
 const AddIngredient: React.FC = () => {
   const [ingredient, setIngredient] = useState('');
   const dispatch = useDispatch();
-  const ingredientData = {
-    id: Date.now(),
-    ingredient: ingredient,
-    amount: 0,
-    unit: ''
-  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
