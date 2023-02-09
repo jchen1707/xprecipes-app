@@ -9,7 +9,7 @@ on a grocery trip? Xprecipes looks to solve this problem. Track your food invent
 ## Built with
 [React](https://reactjs.org/) <br />
 [TailwindCSS](https://tailwindcss.com/) <br />
-[DaisyUI](https://daisyui.com/) <br />
+[SASS](https://sass-lang.com/) <br />
 [Axios](https://www.npmjs.com/package/axios) <br />
 [react-responsive](https://www.npmjs.com/package/react-responsive) <br />
 [Flask](https://flask.palletsprojects.com/en/2.2.x/) <br />
