@@ -2,21 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '../../sass_config.scss';
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: $header-background-color;
+  box-shadow: $header-shadow;
 
   .header-content {
     display: flex;
     align-items: center;
 
     .header-title {
-      font-weight: bold;
-      margin-right: 1rem;
+      font-weight: $header-title-font-weight;
+      margin-right: $header-title-margin-right;
     }
   }
 
@@ -24,36 +26,35 @@
     display: flex;
 
     .btn {
-      border: none;
-      border-radius: 0.25rem;
-      padding: 0.5rem 1rem;
-      margin-left: 1rem;
-      font-weight: bold;
-      transition: all 0.2s ease-in-out;
+      border: $btn-border;
+      border-radius: $btn-border-radius;
+      padding: $btn-padding;
+      margin-left: $btn-margin-left;
+      font-weight: $btn-font-weight;
+      transition: $btn-transition;
 
       &:hover {
-        cursor: pointer;
-        transform: translateY(-1px);
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: $btn-hover-cursor;
+        transform: $btn-hover-transform;
+        box-shadow: $btn-hover-shadow;
       }
 
       &-login {
-        background-color: #f0ad4e;
-        color: #fff;
+        background-color: $btn-login-background-color;
+        color: $btn-login-color;
 
         &:hover {
-          background-color: #ed9b0f;
+          background-color: $btn-login-hover-background-color;
         }
       }
 
       &-register {
-        background-color: #5cb85c;
-        color: #fff;
+        background-color: $btn-register-background-color;
+        color: $btn-register-color;
 
         &:hover {
-          background-color: #47a447;
+          background-color: $btn-register-hover-background-color;
         }
       }
     }
   }
-}

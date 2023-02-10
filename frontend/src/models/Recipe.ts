@@ -1,4 +1,4 @@
-type Recipe = {
+export interface Recipe {
     id: number,
     title: string,
     ingredients: string,
@@ -9,6 +9,5 @@ type Recipe = {
     calories: number,
     cooktime: string,
   };
-  
-  export default Recipe;
+
   

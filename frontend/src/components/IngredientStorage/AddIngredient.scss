@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import '../sass_config.scss';
 
 form {
     display: flex;
@@ -12,13 +12,21 @@ form {
       border-radius: 4px 0 0 4px;
       &:focus {
         outline: none;
+        box-shadow: 0 0 0 2px #5cb85c;
       }
     }
     button {
       padding: 0.5rem 1rem;
       border: 1px solid #ccc;
       border-radius: 0 4px 4px 0;
-      background-color: lightgray;
+      background-color: $btn-register-background-color;
+      color: $btn-register-color;
+      &:hover {
+        background-color: $btn-register-hover-background-color;
+        cursor: $btn-hover-cursor;
+        transform: $btn-hover-transform;
+        box-shadow: $btn-hover-shadow;
+      }
       &:focus {
         outline: none;
       }

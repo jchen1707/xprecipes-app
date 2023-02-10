@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addIngredient } from '../../actions/ingredientActions';
 import { IngredientStorage } from '../../models/IngredientStorage';
+import './AddIngredient.scss'
 
 const AddIngredient: React.FC = () => {
   const [ingredient, setIngredient] = useState('');

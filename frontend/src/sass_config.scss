@@ -1,0 +1,81 @@
+//header
+$header-background-color: #fff;
+$header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+$header-title-font-weight: bold;
+$header-title-margin-right: 1rem;
+
+$btn-border: none;
+$btn-border-radius: 0.25rem;
+$btn-padding: 0.5rem 1rem;
+$btn-margin-left: 1rem;
+$btn-font-weight: bold;
+$btn-transition: all 0.2s ease-in-out;
+
+$btn-hover-cursor: pointer;
+$btn-hover-transform: translateY(-1px);
+$btn-hover-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+$btn-login-background-color: #f0ad4e;
+$btn-login-color: #fff;
+$btn-login-hover-background-color: #ed9b0f;
+
+$btn-register-background-color: #5cb85c;
+$btn-register-color: #fff;
+$btn-register-hover-background-color: #47a447;
+
+
+//footer
+$footer-background-color: #fff;
+$footer-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+$footer-nav-color: #333;
+$footer-nav-font-size: 0.875rem;
+$footer-nav-margin-right: 1rem;
+
+$footer-copyright-color: #333;
+$footer-copyright-font-size: 0.875rem;
+
+// AddIngredient
+$add-ingredient-background-color: #fff;
+$add-ingredient-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+$add-ingredient-form-background-color: #f8f9fa;
+$add-ingredient-form-width: 500px;
+$add-ingredient-form-padding: 1rem;
+$add-ingredient-form-margin: 2rem auto;
+
+$add-ingredient-form-input-background-color: #fff;
+$add-ingredient-form-input-color: #333;
+$add-ingredient-form-input-font-size: 1rem;
+$add-ingredient-form-input-width: 100%;
+$add-ingredient-form-input-padding: 0.5rem;
+$add-ingredient-form-input-margin-bottom: 1rem;
+
+$add-ingredient-form-submit-background-color: #5cb85c;
+$add-ingredient-form-submit-color: #fff;
+$add-ingredient-form-submit-font-size: 1rem;
+$add-ingredient-form-submit-width: 100%;
+$add-ingredient-form-submit-padding: 0.5rem;
+$add-ingredient-form-submit-margin-top: 1rem;
+$add-ingredient-form-submit-transition: all 0.2s ease-in-out;
+
+$add-ingredient-form-submit-hover-cursor: pointer;
+$add-ingredient-form-submit-hover-transform: translateY(-1px);
+$add-ingredient-form-submit-hover-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// ingredient styles
+$ingredient-border-color: #ccc;
+$ingredient-display: flex;
+$ingredient-align-items: center;
+$ingredient-justify-content: space-between;
+$ingredient-padding: 1rem;
+$ingredient-border-bottom: 1px solid $ingredient-border-color;
+$ingredient-p-margin: 0;
+$ingredient-form-display: flex;
+$ingredient-form-input-padding: 0.5rem;
+$ingredient-form-input-margin-right: 0.5rem;
+$ingredient-form-button-padding: 0.5rem 1rem;
+$ingredient-form-button-background-color: lightgray;
+$ingredient-form-button-border: 1px solid $ingredient-border-color;
+$ingredient-form-button-border-radius: 4px;
+$ingredient-form-button-focus-outline: none;

@@ -2,20 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@import '../../sass_config.scss';
 
-.bg-gray-800 {
-    background-color: #2d3748;
-  }
-  
-  .p-4 {
-    padding: 1rem;
-  }
-  
-  .text-center {
-    text-align: center;
-  }
-  
-  .text-white {
-    color: #fff;
-  }
+.footer {
+  background-color: $footer-background-color;
+  box-shadow: $footer-shadow;
+}
 
+.footer-nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 1rem;
+}
+
+a {
+  color: $footer-nav-color;
+  font-size: $footer-nav-font-size;
+  margin-right: $footer-nav-margin-right;
+  text-decoration: none;
+}
+
+.footer-copyright {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  color: $footer-copyright-color;
+  font-size: $footer-copyright-font-size;
+}
