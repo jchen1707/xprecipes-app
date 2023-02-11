@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '../sass_config.scss';
+
+$recipe-item-padding: 1rem;
+$recipe-item-border-width: 1px;
+$recipe-item-border-style: solid;
+$recipe-item-border-color: #e2e8f0;
+
+.recipe-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: $recipe-item-border-width $recipe-item-border-style $recipe-item-border-color;
+  padding: $recipe-item-padding;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 1rem;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  &__ingredients {
+    font-size: 1.25rem;
+    color: #a0aec0;
+  }
+
+  &__image {
+    height: 8rem;
+    width: 8rem;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}

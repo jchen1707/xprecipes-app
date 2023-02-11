@@ -4,31 +4,43 @@
 @import '../sass_config.scss';
 
 form {
-    display: flex;
-    input {
-      flex-grow: 1;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 4px 0 0 4px;
-      &:focus {
-        outline: none;
-        box-shadow: 0 0 0 2px #5cb85c;
-      }
-    }
-    button {
-      padding: 0.5rem 1rem;
-      border: 1px solid #ccc;
-      border-radius: 0 4px 4px 0;
-      background-color: $btn-register-background-color;
-      color: $btn-register-color;
-      &:hover {
-        background-color: $btn-register-hover-background-color;
-        cursor: $btn-hover-cursor;
-        transform: $btn-hover-transform;
-        box-shadow: $btn-hover-shadow;
-      }
-      &:focus {
-        outline: none;
-      }
+  background-color: $add-ingredient-form-background-color;
+  width: $add-ingredient-form-width;
+  padding: $add-ingredient-form-padding;
+  margin: $add-ingredient-form-margin;
+  display: flex;
+  input {
+    background-color: $add-ingredient-form-input-background-color;
+    color: $add-ingredient-form-input-color;
+    font-size: $add-ingredient-form-input-font-size;
+    width: $add-ingredient-form-input-width;
+    padding: $add-ingredient-form-input-padding;
+    margin-bottom: $add-ingredient-form-input-margin-bottom;
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px #5cb85c;
     }
   }
+  button {
+    background-color: $add-ingredient-form-submit-background-color;
+    color: $add-ingredient-form-submit-color;
+    font-size: $add-ingredient-form-submit-font-size;
+    width: $add-ingredient-form-submit-width;
+    padding: $add-ingredient-form-submit-padding;
+    margin-top: $add-ingredient-form-submit-margin-top;
+    transition: $add-ingredient-form-submit-transition;
+    border: 1px solid #ccc;
+    border-radius: 0 4px 4px 0;
+    &:hover {
+      cursor: $add-ingredient-form-submit-hover-cursor;
+      transform: $add-ingredient-form-submit-hover-transform;
+      box-shadow: $add-ingredient-form-submit-hover-shadow;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+}

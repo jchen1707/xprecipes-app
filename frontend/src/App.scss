@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '../sass_config.scss';
 
 .App {
   text-align: center;

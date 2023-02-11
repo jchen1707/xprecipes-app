@@ -1,27 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Provider } from 'react-redux';
-import { store } from '../store/store';
+import { store } from './store/store';
+import RecipeList from './components/Recipe/RecipeList';
+import RecipeItem from './components/Recipe/RecipeItem';
+import IngredientList from './components/IngredientStorage/IngredientList';
+import IngredientItem from './components/IngredientStorage/IngredientItem';
 
 function App() {
+  const sampleRecipe = {
+    title: "Sample Recipe",
+    ingredients: "Ingredients",
+    ingredient_quantity: 1,
+    unit: "unit",
+    calories: 100,
+    cooktime: "10 minutes",
+    image_url: "https://sample-image-url.com"
+  };
+
+  const sampleIngredient = {
+    id: 1,
+    ingredient: "Sample Ingredient",
+    amount: 1,
+    unit: "unit"
+  };
+
   return (
     <Provider store={store}>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <RecipeList />
+        <RecipeItem recipe={sampleRecipe} />
+        <IngredientList />
+        <IngredientItem ingredient={sampleIngredient} />
       </div>
     </Provider>
   );

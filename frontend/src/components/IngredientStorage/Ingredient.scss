@@ -4,30 +4,30 @@
 @import '../sass_config.scss';
 
 .ingredient {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid $ingredient-border-color;
+  display: $ingredient-display;
+  align-items: $ingredient-align-items;
+  justify-content: $ingredient-justify-content;
+  padding: $ingredient-padding;
+  border-bottom: $ingredient-border-bottom;
 
   p {
-    margin: 0;
+    margin: $ingredient-p-margin;
   }
 
   form {
-    display: flex;
+    display: $ingredient-form-display;
     input[type='text'],
     input[type='number'] {
-      padding: 0.5rem;
-      margin-right: 0.5rem;
+      padding: $ingredient-form-input-padding;
+      margin-right: $ingredient-form-input-margin-right;
     }
     button {
-      padding: $btn-padding;
-      background-color: lightgray;
-      border: 1px solid $ingredient-border-color;
-      border-radius: $btn-border-radius;
+      padding: $ingredient-form-button-padding;
+      background-color: $ingredient-form-button-background-color;
+      border: $ingredient-form-button-border;
+      border-radius: $ingredient-form-button-border-radius;
       &:focus {
-        outline: none;
+        outline: $ingredient-form-button-focus-outline;
       }
     }
   }

@@ -35,7 +35,7 @@ $footer-nav-margin-right: 1rem;
 $footer-copyright-color: #333;
 $footer-copyright-font-size: 0.875rem;
 
-// AddIngredient
+//AddIngredient
 $add-ingredient-background-color: #fff;
 $add-ingredient-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
@@ -63,7 +63,7 @@ $add-ingredient-form-submit-hover-cursor: pointer;
 $add-ingredient-form-submit-hover-transform: translateY(-1px);
 $add-ingredient-form-submit-hover-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-// ingredient styles
+//Ingredient
 $ingredient-border-color: #ccc;
 $ingredient-display: flex;
 $ingredient-align-items: center;
@@ -71,6 +71,7 @@ $ingredient-justify-content: space-between;
 $ingredient-padding: 1rem;
 $ingredient-border-bottom: 1px solid $ingredient-border-color;
 $ingredient-p-margin: 0;
+
 $ingredient-form-display: flex;
 $ingredient-form-input-padding: 0.5rem;
 $ingredient-form-input-margin-right: 0.5rem;
@@ -79,3 +80,49 @@ $ingredient-form-button-background-color: lightgray;
 $ingredient-form-button-border: 1px solid $ingredient-border-color;
 $ingredient-form-button-border-radius: 4px;
 $ingredient-form-button-focus-outline: none;
+
+//IngredientList
+$list-item-padding: 1rem;
+$list-item-border-color: #ccc;
+$list-item-border-width: 1px;
+$list-item-border-style: solid;
+
+//IngredientItem
+$ingredient-item-font-size-large: 24px;
+$ingredient-item-font-size-small: 16px;
+$ingredient-item-spacing-medium: 8px;
+$ingredient-item-background-color-gray: #e5e5e5;
+$ingredient-item-shadow-small: 0px 2px 4px 0px rgba(0,0,0,0.2);
+
+//AddRecipe
+$add-recipe-input-padding: 10px;
+$add-recipe-input-margin: 20px;
+$add-recipe-input-font-size: 16px;
+$add-recipe-input-width: 500px;
+$add-recipe-input-border-radius: 5px;
+$add-recipe-input-border-color: #ccc;
+
+$add-recipe-button-padding: 10px 20px;
+$add-recipe-button-margin: 20px;
+$add-recipe-button-font-size: 16px;
+$add-recipe-button-border-radius: 5px;
+$add-recipe-button-background-color: lightblue;
+$add-recipe-button-color: white;
+$add-recipe-button-border-color: lightblue;
+
+//Recipe
+$recipe-background-color: #f2f2f2;
+$recipe-border-color: #ccc;
+
+//RecipeList
+$list-item-border-width: 1px;
+$list-item-border-style: solid;
+$list-item-border-color: #ddd;
+$list-item-padding: 1rem;
+
+//RecipeItem
+$recipe-item-font-size: 1rem;
+$recipe-item-padding: 1rem;
+$recipe-item-background-color: #fff;
+$recipe-item-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+$recipe-item-border-radius: $default-border-radius;

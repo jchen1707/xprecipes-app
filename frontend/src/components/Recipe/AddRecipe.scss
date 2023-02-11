@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import '../sass_config.scss';
+
+.add-recipe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    input[type="text"],
+    input[type="number"] {
+      padding: $input-padding;
+      margin: $input-margin;
+      font-size: $input-font-size;
+      width: $input-width;
+      border-radius: $input-border-radius;
+      border: 1px solid $input-border-color;
+    }
+    
+    input[type="file"] {
+      margin: $input-margin;
+    }
+    
+    button {
+      padding: $button-padding;
+      margin: $button-margin;
+      font-size: $button-font-size;
+      border-radius: $button-border-radius;
+      background-color: $button-background-color;
+      color: $button-color;
+      border: 1px solid $button-border-color;
+    }
+  }
+  
+  

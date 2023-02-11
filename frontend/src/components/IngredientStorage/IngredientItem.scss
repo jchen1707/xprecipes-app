@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '../sass_config.scss';
+
+.ingredient-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 16px;
+    padding: 16px;
+    background-color: $ingredient-item-background-color-gray;
+    border-radius: 8px;
+    box-shadow: $ingredient-item-shadow-small;
+  
+    &__name {
+      margin-bottom: $ingredient-item-spacing-medium;
+      font-size: $ingredient-item-font-size-large;
+      font-weight: bold;
+    }
+  
+    &__amount {
+      font-size: $ingredient-item-font-size-small;
+    }
+}
