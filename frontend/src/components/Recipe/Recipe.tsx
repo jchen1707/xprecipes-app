@@ -1,34 +1,23 @@
 import React from "react";
 import "./Recipe.scss";
+import { Recipe as RecipeType } from "../../models/Recipe";
 
-interface RecipeProps {
-  title: string;
-  ingredients: string;
-  ingredient_quantity: number;
-  unit: string;
-  image: string;
-  calories: number;
-  cooktime: string;
+interface Props {
+  recipe: RecipeType;
 }
 
-const Recipe: React.FC<RecipeProps> = ({
-  title,
-  ingredients,
-  ingredient_quantity,
-  unit,
-  image,
-  calories,
-  cooktime,
-}) => {
+const Recipe: React.FC<Props> = ({ recipe }) => {
   return (
     <div className="recipe">
-      <h2 className="recipe__title">{title}</h2>
+      <h2 className="recipe__title">{recipe.title}</h2>
       <p className="recipe__ingredients">
-        {ingredients} ({ingredient_quantity} {unit})
+        {recipe.ingredients} ({recipe.ingredient_quantity} {recipe.unit})
       </p>
-      <img className="recipe__image" src={image} alt={title} />
-      <p className="recipe__calories">{calories} calories</p>
-      <p className="recipe__cooktime">Cook time: {cooktime}</p>
+      {recipe.image_url && (
+        <img className="recipe__image" src={recipe.image_url} alt={recipe.title} />
+      )}
+      <p className="recipe__calories">{recipe.calories} calories</p>
+      {recipe.cooktime && <p className="recipe__cooktime">Cook time: {recipe.cooktime}</p>}
     </div>
   );
 };
